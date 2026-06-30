@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#153e35">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Okulda mı?">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Okulda mı? — Canlı öğrenci takibi</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/app-icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/icon-180.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <section class="login-screen" id="loginScreen">
+    <div class="login-visual">
+      <a class="login-brand" href="#"><span>O</span><b>okulda mı?</b></a>
+      <div><em>GÜVENLİ · ANLIK · KOLAY</em><h1>Çocuğunuzun okul günü,<br>artık size daha yakın.</h1><p>Yoklama, ders programı ve okul durumunu güvenli biçimde takip edin.</p></div>
+      <div class="trust-row"><span>✓ Rol bazlı erişim</span><span>✓ Anlık bildirim</span><span>✓ Güvenli oturum</span></div>
+    </div>
+    <div class="login-panel">
+      <form id="loginForm">
+        <span class="mobile-login-brand"><i>O</i><b>okulda mı?</b></span>
+        <small>HOŞ GELDİNİZ</small><h2>Hesabınıza giriş yapın</h2><p>Rolünüz, kayıtlı kullanıcı bilgilerinizden otomatik olarak belirlenir.</p>
+        <label>E-posta adresi<input id="loginEmail" type="email" value="ogretmen@okulda.test" required autocomplete="username"></label>
+        <label>Şifre<div class="password-field"><input id="loginPassword" type="password" value="1234" required autocomplete="current-password"><button type="button" id="togglePassword">Göster</button></div></label>
+        <div class="login-options"><label><input type="checkbox" checked> Beni hatırla</label><button type="button">Şifremi unuttum</button></div>
+        <button class="login-submit" type="submit">Güvenli giriş yap <span>→</span></button>
+        <button class="install-app" id="installApp" type="button">▣ Uygulamayı bu cihaza yükle</button>
+        <div class="demo-users"><span>DEMO HESAPLAR</span><div><button type="button" data-demo="ogretmen@okulda.test">Öğretmen</button><button type="button" data-demo="veli@okulda.test">Veli</button><button type="button" data-demo="idare@okulda.test">İdare</button><button type="button" data-demo="admin@okulda.test">Admin</button></div><small>Tüm demo hesaplarının şifresi: 1234</small></div>
+        <p class="login-error" id="loginError" role="alert"></p>
+      </form>
+    </div>
+  </section>
+
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="#"><span class="brand-mark">O</span><span><b>okulda mı?</b><small>Atatürk Ortaokulu</small></span></a>
+    <nav id="mainNav">
+      <p>GENEL</p>
+      <button class="active" data-page="home" data-roles="teacher,parent,management,admin"><span class="icon">⌂</span>Ana Sayfa</button>
+      <button data-page="schedule" data-roles="teacher,parent,management,admin"><span class="icon">▦</span>Ders Programı</button>
+      <button data-page="attendance" data-roles="teacher,management,admin"><span class="icon">✓</span>Yoklama <i>2</i></button>
+      <button data-page="messages" data-roles="teacher,parent,admin"><span class="icon">✉</span>Mesajlar</button>
+      <p>YÖNETİM</p>
+      <button data-page="classes" data-roles="management,admin"><span class="icon">◇</span>Sınıflar</button>
+      <button data-page="students" data-roles="management,admin"><span class="icon">♙</span>Öğrenciler</button>
+      <button data-page="parents" data-roles="management,admin"><span class="icon">♙</span>Veliler</button>
+      <button data-page="notifications" data-roles="management,admin"><span class="icon">♢</span>Bildirimler</button>
+      <button data-page="reports" data-roles="management,admin"><span class="icon">⌁</span>Raporlar</button>
+    </nav>
+    <div class="side-note"><span>?</span><div><b>Yardıma mı ihtiyacınız var?</b><small>Destek ekibimiz yanınızda.</small></div></div>
+    <button class="settings" id="settingsButton" data-page="settings"><span>⚙</span>Ayarlar</button>
+  </aside>
+
+  <main>
+    <header class="topbar">
+      <button class="menu" id="menuButton" aria-label="Menüyü aç">☰</button>
+      <div class="school-picker"><small>Okul</small><b>Atatürk Ortaokulu</b><span>⌄</span></div>
+      <button class="bell" id="notificationButton" aria-label="Bildirimler">♢<i></i></button>
+      <div class="user"><span class="avatar" id="avatar">EY</span><span><b id="userName">Elif Yılmaz</b><small id="userTitle">Matematik Öğretmeni</small></span><button id="logoutButton" title="Çıkış yap">↪</button></div>
+    </header>
+
+    <div class="page">
+      <section class="welcome">
+        <div><span class="date">30 HAZİRAN 2026, SALI</span><h1 id="greeting">Günaydın, Elif Öğretmen <em>👋</em></h1><p id="intro">Bugün 4 dersiniz var. İlk dersiniz 12 dakika sonra başlıyor.</p></div>
+        <div class="role-switcher admin-only" aria-label="Admin panel görünümü">
+          <button class="active" data-role="teacher">Öğretmen</button>
+          <button data-role="parent">Veli</button>
+          <button data-role="management">Okul İdaresi</button>
+          <button data-role="admin">Admin</button>
+        </div>
+      </section>
+
+      <section class="role-view active" id="teacherView">
+        <article class="next-lesson feature-card">
+          <div class="time-box"><b>09:00</b><span>09:40</span></div>
+          <div class="feature-copy"><em><i></i> SIRADAKİ DERS</em><h2>Matematik <span>·</span> 7/A Sınıfı</h2><p>12 dakika sonra başlıyor · Derslik 203</p></div>
+          <div class="class-size"><b>28</b><span>öğrenci</span></div>
+          <button class="primary open-attendance">Yoklamayı Başlat <span>→</span></button>
+        </article>
+        <div class="stats four">
+          <article><span class="stat-icon green">▦</span><div><small>BUGÜNKÜ DERS</small><b>4</b><p>1 tamamlandı</p></div></article>
+          <article><span class="stat-icon blue">✓</span><div><small>ALINAN YOKLAMA</small><b>1 / 4</b><p>3 yoklama bekliyor</p></div></article>
+          <article><span class="stat-icon orange">♙</span><div><small>BUGÜN GELMEYEN</small><b>3</b><p>Velilere iletildi</p></div></article>
+          <article><span class="stat-icon purple">◷</span><div><small>HAFTALIK KATILIM</small><b>%96</b><p class="up">↑ %2,4 bu hafta</p></div></article>
+        </div>
+        <div class="dashboard-grid">
+          <article class="panel schedule-panel">
+            <div class="panel-head"><div><h3>Bugünün Programı</h3><p>4 ders · 08:20 — 13:10</p></div><button>Tüm program <span>→</span></button></div>
+            <div class="timeline">
+              <div class="done"><time>08:20<small>09:00</small></time><i></i><p><b>Matematik</b><span>6/B Sınıfı · Derslik 105</span></p><em>Tamamlandı ✓</em></div>
+              <div class="current"><time>09:00<small>09:40</small></time><i></i><p><b>Matematik</b><span>7/A Sınıfı · Derslik 203</span></p><button class="open-attendance">Yoklama al</button></div>
+              <div><time>10:00<small>10:40</small></time><i></i><p><b>Matematik</b><span>8/C Sınıfı · Derslik 302</span></p><em>Yaklaşan</em></div>
+              <div><time>12:30<small>13:10</small></time><i></i><p><b>Etüt</b><span>7/A Sınıfı · Kütüphane</span></p><em>Yaklaşan</em></div>
+            </div>
+          </article>
+          <article class="panel attendance-summary">
+            <div class="panel-head"><div><h3>Son Yoklama</h3><p>6/B · Matematik</p></div><span>08:58</span></div>
+            <div class="donut"><span><b>%96</b><small>katılım</small></span></div>
+            <div class="legend"><span><i class="present"></i><b>26</b> Geldi</span><span><i class="absent"></i><b>1</b> Gelmedi</span><span><i class="late"></i><b>1</b> Geç</span></div>
+            <button class="outline">Yoklama detayını gör</button>
+            <button class="message-action open-message" data-recipient="Melis Demir" data-context="Arda Demir · 7/A">✉ Arda'nın velisine mesaj gönder</button>
+          </article>
+        </div>
+      </section>
+
+      <section class="role-view" id="parentView">
+        <article class="child-status feature-card">
+          <span class="child-avatar">AD</span><div class="feature-copy"><em>ÇOCUĞUNUZ</em><h2>Arda Demir</h2><p>7/A Sınıfı · No: 184</p></div>
+          <div class="live-status"><small><i></i> ŞU ANDA</small><b>Okulda ve derste</b><span>09:02'de Matematik dersine katıldı</span></div>
+        </article>
+        <div class="stats three"><article><span class="stat-icon green">✓</span><div><small>BU AY KATILIM</small><b>%98</b><p>19 / 20 gün</p></div></article><article><span class="stat-icon orange">◷</span><div><small>GEÇ KALMA</small><b>1</b><p>Bu ay</p></div></article><article><span class="stat-icon blue">▦</span><div><small>BUGÜNKÜ DERS</small><b>2 / 7</b><p>5 ders kaldı</p></div></article></div>
+        <div class="dashboard-grid">
+          <article class="panel"><div class="panel-head"><div><h3>Bugünkü Durum</h3><p>Ders katılım hareketleri</p></div><span>30 Haziran</span></div><div class="day-flow"><div><time>08:12</time><i></i><p><b>Okula giriş yaptı</b><span>Ana kapı</span></p><em>✓</em></div><div><time>08:20</time><i></i><p><b>Fen Bilimleri</b><span>Katıldı · Derslik 105</span></p><em>✓</em></div><div class="live"><time>09:00</time><i></i><p><b>Matematik</b><span>Şu anda derste · Derslik 203</span></p><em>CANLI</em></div><div><time>10:00</time><i></i><p><b>Türkçe</b><span>Yaklaşan · Derslik 204</span></p></div></div></article>
+          <aside class="side-stack"><article class="panel notification-card" id="parentNotification"><span>♢</span><div><small>SON BİLDİRİM</small><b>Arda Matematik dersinde</b><p>Yoklama öğretmeni tarafından onaylandı.</p><time>Şimdi</time></div></article><article class="teacher-contact"><span>EY</span><div><b>Elif Yılmaz</b><small>Matematik Öğretmeni</small></div><button class="open-message" data-recipient="Elif Yılmaz" data-context="Matematik Öğretmeni">Mesaj gönder</button></article></aside>
+        </div>
+      </section>
+
+      <section class="role-view" id="managementView">
+        <article class="management-hero feature-card"><div class="feature-copy"><em><i></i> CANLI OKUL DURUMU</em><h2>Okul bugün %94 katılımla devam ediyor.</h2><p>Toplam 684 öğrenciden 642'si okulda.</p></div><div><b>642</b><span>öğrenci okulda</span><small>Son güncelleme: şimdi</small></div></article>
+        <div class="stats four"><article><span class="stat-icon green">♙</span><div><small>OKULDA</small><b>642</b><p>%94 katılım</p></div></article><article><span class="stat-icon orange">−</span><div><small>GELMEYEN</small><b>34</b><p>Velilere bildirildi</p></div></article><article><span class="stat-icon purple">◷</span><div><small>GEÇ GELEN</small><b>8</b><p>Bugün</p></div></article><article><span class="stat-icon blue">✓</span><div><small>ALINAN YOKLAMA</small><b>42 / 51</b><p>9 ders bekliyor</p></div></article></div>
+        <article class="panel classes-panel"><div class="panel-head"><div><h3>Sınıfların Canlı Durumu</h3><p>Yeşil sınıflarda yoklama tamamlandı</p></div><div class="class-legend"><span><i></i> Yoklama alındı</span><span><i></i> Bekliyor</span></div></div><div class="class-grid" id="classGrid"><button class="complete"><span>5A</span><b>5/A Sınıfı</b><small>24 / 25 öğrenci</small><em>✓ Yoklama alındı</em></button><button class="complete"><span>5B</span><b>5/B Sınıfı</b><small>27 / 28 öğrenci</small><em>✓ Yoklama alındı</em></button><button><span>6A</span><b>6/A Sınıfı</b><small>29 öğrenci</small><em>◷ Bekleniyor</em></button><button class="complete"><span>6B</span><b>6/B Sınıfı</b><small>26 / 28 öğrenci</small><em>✓ Yoklama alındı</em></button><button data-class="7A"><span>7A</span><b>7/A Sınıfı</b><small>28 öğrenci</small><em>◷ Ders devam ediyor</em></button><button><span>7B</span><b>7/B Sınıfı</b><small>30 öğrenci</small><em>! Yoklama bekliyor</em></button><button class="complete"><span>8A</span><b>8/A Sınıfı</b><small>25 / 26 öğrenci</small><em>✓ Yoklama alındı</em></button><button><span>8C</span><b>8/C Sınıfı</b><small>27 öğrenci</small><em>◷ Yaklaşan ders</em></button></div></article>
+        <div class="dashboard-grid"><article class="panel"><div class="panel-head"><div><h3>Haftalık Katılım</h3><p>Son 5 okul günü</p></div><button>Raporu gör →</button></div><div class="bars"><div style="--h:76%"><b>%92</b><i></i><span>Pzt</span></div><div style="--h:84%"><b>%95</b><i></i><span>Sal</span></div><div style="--h:79%"><b>%93</b><i></i><span>Çar</span></div><div style="--h:90%"><b>%97</b><i></i><span>Per</span></div><div class="today" style="--h:82%"><b>%94</b><i></i><span>Bugün</span></div></div></article><article class="panel"><div class="panel-head"><div><h3>Yoklama Bekleyenler</h3><p>9 aktif ders</p></div></div><div class="waiting"><div><span>7/B</span><p><b>Türkçe</b><small>Başlayalı 18 dakika oldu</small></p><em>Uyar</em></div><div><span>5/A</span><p><b>Matematik</b><small>Başlayalı 12 dakika oldu</small></p><em>Uyar</em></div><div><span>8/D</span><p><b>Fen Bilimleri</b><small>Başlayalı 8 dakika oldu</small></p><em>Uyar</em></div></div></article></div>
+      </section>
+
+      <section class="role-view" id="adminView">
+        <div class="admin-heading"><div><h2>Sistem Yönetimi</h2><p>Kullanıcıları, rolleri ve okul verilerini tek noktadan yönetin.</p></div><button class="primary" id="addUser">+ Yeni kullanıcı</button></div>
+        <div class="stats four"><article><span class="stat-icon green">♙</span><div><small>TOPLAM KULLANICI</small><b>1.482</b><p>+18 bu ay</p></div></article><article><span class="stat-icon blue">♙</span><div><small>ÖĞRETMEN</small><b>54</b><p>52 aktif</p></div></article><article><span class="stat-icon purple">♙</span><div><small>VELİ</small><b>736</b><p>684 eşleştirildi</p></div></article><article><span class="stat-icon orange">!</span><div><small>EŞLEŞME BEKLEYEN</small><b>12</b><p>İşlem gerekli</p></div></article></div>
+        <article class="panel user-table"><div class="panel-head"><div><h3>Kullanıcı Yönetimi</h3><p>Rolleri ve erişim izinlerini düzenleyin</p></div><div class="table-tools"><input placeholder="Kullanıcı ara"><button>Filtrele</button></div></div><div class="table"><div class="tr th"><span>KULLANICI</span><span>ROL</span><span>İLİŞKİ</span><span>DURUM</span><span></span></div><div class="tr"><span class="person"><i>EY</i><b>Elif Yılmaz<small>elif.yilmaz@okul.edu.tr</small></b></span><span><em class="role-tag teacher">Öğretmen</em></span><span>Matematik · 7/A</span><span class="active-state">● Aktif</span><button>•••</button></div><div class="tr"><span class="person"><i>MD</i><b>Melis Demir<small>melis.demir@email.com</small></b></span><span><em class="role-tag parent">Veli</em></span><span>Arda Demir · 7/A</span><span class="active-state">● Aktif</span><button>•••</button></div><div class="tr"><span class="person"><i>AK</i><b>Ahmet Kaya<small>ahmet.kaya@okul.edu.tr</small></b></span><span><em class="role-tag management">İdare</em></span><span>Müdür Yardımcısı</span><span class="active-state">● Aktif</span><button>•••</button></div></div></article>
+      </section>
+      <section class="module-view" id="moduleView" aria-live="polite"></section>
+    </div>
+  </main>
+
+  <div class="modal-wrap" id="attendanceModal" aria-hidden="true">
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="attendanceTitle">
+      <header><div><em>7/A · MATEMATİK</em><h2 id="attendanceTitle">Yoklama al</h2><p>30 Haziran Salı · 09:00 — 09:40</p></div><button id="closeModal">×</button></header>
+      <div class="attendance-tools"><label>⌕<input id="studentSearch" placeholder="Öğrenci ara..."></label><button id="allPresent">Tümünü geldi işaretle</button></div>
+      <div class="counts"><span>Geldi <b id="presentCount">4</b></span><span>Gelmedi <b id="absentCount">1</b></span><span>Geç <b id="lateCount">1</b></span><span>İzinli <b id="excusedCount">0</b></span></div>
+      <div class="student-list" id="studentList"></div>
+      <footer><span id="markedText">6 öğrenci işaretlendi</span><button class="primary" id="saveAttendance">Yoklamayı Kaydet ✓</button></footer>
+    </section>
+  </div>
+  <div class="modal-wrap" id="messageModal" aria-hidden="true">
+    <section class="modal message-modal" role="dialog" aria-modal="true" aria-labelledby="messageTitle">
+      <header><div><em>DOĞRUDAN MESAJ</em><h2 id="messageTitle">Mesaj gönder</h2><p id="messageContext"></p></div><button id="closeMessage">×</button></header>
+      <div class="recipient"><span id="recipientAvatar">MD</span><div><small>ALICI</small><b id="recipientName">Melis Demir</b><p>Mesaj yalnızca bu alıcıya iletilecek.</p></div><i>Güvenli</i></div>
+      <form id="messageForm"><label>Konu<input id="messageSubject" maxlength="60" placeholder="Mesajınızın konusu" required></label><label>Mesaj<textarea id="messageBody" maxlength="500" placeholder="Mesajınızı buraya yazın..." required></textarea><small><span id="charCount">0</span> / 500</small></label><div class="privacy-note">🔒 Bu görüşme yalnızca öğretmen ve ilgili veli tarafından görüntülenebilir.</div><footer><button type="button" id="cancelMessage">Vazgeç</button><button type="submit" class="primary">Mesajı gönder →</button></footer></form>
+    </section>
+  </div>
+  <div class="modal-wrap" id="actionModal" aria-hidden="true">
+    <section class="modal action-modal" role="dialog" aria-modal="true" aria-labelledby="actionTitle">
+      <header><div><em>YENİ KAYIT</em><h2 id="actionTitle">Kayıt oluştur</h2><p id="actionDescription">Bilgileri eksiksiz doldurun.</p></div><button id="closeAction">×</button></header>
+      <form id="actionForm"><div id="actionFields"></div><footer><button type="button" id="cancelAction">Vazgeç</button><button type="submit" class="primary">Kaydet ✓</button></footer></form>
+    </section>
+  </div>
+  <div class="toast" id="toast"><span>✓</span><div><b>Yoklama kaydedildi</b><small>Gelmeyen öğrencinin velisine bildirim gönderildi.</small></div></div>
+  <script src="app.js"></script>
+</body>
+</html>
